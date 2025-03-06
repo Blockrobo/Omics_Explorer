@@ -1,22 +1,46 @@
-# Define UI for application that draws a histogram
-ui <- fluidPage(
+# ui.R
+source("global.R")
+
+ui <- navbarPage(
+  title = div(
+    tags$img(src = "logo.png", height = "40px", style = "margin-right:10px;"),
+    "Omics Explorer"
+  ),
+  theme = shinytheme("paper"),
   
-  # Application title
-  titlePanel("Test"),
+  # Home Tab
+  tabPanel("Home",
+           fluidPage(
+             titlePanel("Welcome to Omics Explorer"),
+             p("This web application allows you to analyze multi-omics datasets, visualize key insights, and explore biological relationships."),
+             p("You can:"),
+             tags$ul(
+               tags$li("View dataset summaries"),
+               tags$li("Perform enrichment analysis"),
+               tags$li("Conduct data-driven exploration"),
+               tags$li("Visualize data with an interactive genome browser")
+             )
+           )
+  ),
   
-  # Sidebar with a slider input for number of bins 
-  sidebarLayout(
-    sidebarPanel(
-      sliderInput("bins",
-                  "Number of bins:",
-                  min = 1,
-                  max = 50,
-                  value = 30)
-    ),
-    
-    # Show a plot of the generated distribution
-    mainPanel(
-      plotOutput("distPlot")
-    )
-  )
+  # Dataset Overview Tab
+  tabPanel("Dataset Overview",
+           sidebarLayout(
+             sidebarPanel(
+               selectInput("dataset", "Select Dataset:", choices = names(datasets))
+             ),
+             mainPanel(
+               DTOutput("dataTable")
+             )
+           )
+  ),
+  
+  # Enrichment Analysis Tab
+  tabPanel("Enrichment Analysis", h3("Enrichment Analysis Placeholder")),
+  
+  # Data Analysis Tab
+  tabPanel("Data Analysis", h3("Data Analysis Placeholder")),
+  
+  # Genome Browser Tab
+  tabPanel("Genome Browser", h3("Genome Browser Placeholder"))
 )
