@@ -1,3 +1,6 @@
+library(DT)  # For DataTables
+
+
 dataset_UI <- function(id) {
   ns <- NS(id)
   
@@ -8,11 +11,11 @@ dataset_UI <- function(id) {
                         titlePanel("Dataset Overview"),
                         sidebarLayout(
                           sidebarPanel(
-                            selectInput(ns("dataset"), "Select Dataset:", choices = names(datasets))
+                            selectInput("dataset", "Select Dataset:", choices = names(datasets))
                           ),
                           mainPanel(
                             h3("Selected Dataset Preview"),
-                            DTOutput(ns("dataTable"))
+                            DTOutput("dataTable")
                           )
                         )
                       )
