@@ -51,7 +51,61 @@ ui <- navbarPage(
   tabPanel("Enrichment Analysis", h3("Enrichment Analysis")),
   
   # Data Analysis Tab
-  tabPanel("Data Analysis", h3("Data Analysis")),
+  tabPanel("Data Analysis",
+           fluidPage(
+             titlePanel("Choose a Data Analysis Type"),
+             
+             # Dashboard Layout - Clickable Cards for Each Analysis
+             fluidRow(
+               column(3, actionButton("go_histogram", "📊 Histogram", class = "btn-analysis")),
+               column(3, actionButton("go_scatter", "🔴 Scatter Plot", class = "btn-analysis")),
+               column(3, actionButton("go_boxplot", "📦 Boxplot", class = "btn-analysis")),
+               column(3, actionButton("go_correlation", "📈 Correlation Matrix", class = "btn-analysis"))
+             ),
+             
+             fluidRow(
+               column(3, actionButton("go_qc", "🛠 QC", class = "btn-analysis")),
+               column(3, actionButton("go_degs", "🧬 DEGs", class = "btn-analysis")),
+               column(3, actionButton("go_heatmap", "🔥 Heatmap", class = "btn-analysis")),
+               column(3, actionButton("go_expression", "📊 Expression", class = "btn-analysis"))
+             ),
+             
+             fluidRow(
+               column(3, actionButton("go_venn", "🔗 Venn Diagram", class = "btn-analysis")),
+               column(3, actionButton("go_enrichment", "📊 Geneset Enrichment", class = "btn-analysis")),
+               column(3, actionButton("go_wgcna", "🔗 WGCNA", class = "btn-analysis")),
+               column(3, actionButton("go_pcsf", "🕸️ PCSF", class = "btn-analysis"))
+             ),
+             
+             # Styling for uniform buttons
+             tags$style(HTML("
+               .btn-analysis {
+                 background-color: white !important;
+                 color: black !important;
+                 width: 100%;
+                 height: 150px;
+                 font-size: 20px;
+                 text-align: center;
+                 display: flex;
+                 align-items: center;
+                 justify-content: center;
+                 border-radius: 10px;
+                 margin-top: 10px;
+                 border: 2px solid #ccc;
+                 box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+                 transition: all 0.2s ease-in-out;
+               }
+               
+               .btn-analysis:hover {
+                 background-color: #f0f0f0 !important;
+                 transform: scale(1.05);
+               }
+             "))
+           )
+  ),
+  
+  
+  
   
   # Genome Browser Tab
   tabPanel("Genome Browser", h3("Genome Browser"))
