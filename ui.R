@@ -1,4 +1,3 @@
-# ui.R
 source("global.R")
 
 ui <- navbarPage(
@@ -12,7 +11,6 @@ ui <- navbarPage(
   tabPanel("Home",
            fluidPage(
              fluidRow(
-               # Left Column: Text Content
                column(8,
                       titlePanel("Welcome to Omics Explorer"),
                       p("This web application allows you to analyze multi-omics datasets, visualize key insights, and explore biological relationships."),
@@ -24,8 +22,6 @@ ui <- navbarPage(
                         tags$li("Visualize data with an interactive genome browser")
                       )
                ),
-               
-               # Right Column: GIF
                column(3, align = "right",
                       tags$img(src = "video-dna-vertical-unscreen.gif", 
                                width = "100%", 
@@ -35,14 +31,74 @@ ui <- navbarPage(
            )
   ),
   
-  # Dataset Overview Tab
-  tabPanel("Dataset Overview", h3("Datasets Overview"),
-           sidebarLayout(
-             sidebarPanel(
-               selectInput("dataset", "Select Dataset:", choices = names(datasets))
+  
+  
+  # Dropdown Menu for Dataset Management
+  navbarMenu("Dataset",
+             
+             # Dataset Overview Subtab
+             tabPanel("Dataset Overview",
+                      fluidPage(
+                        titlePanel("Dataset Overview"),
+                        sidebarLayout(
+                          sidebarPanel(
+                            selectInput("dataset", "Select Dataset:", choices = names(datasets)),
+                          ),
+                          mainPanel(
+                            h3("Selected Dataset Preview"),
+                            DTOutput("dataTable")
+                          )
+                        )
+                      )
              ),
-             mainPanel(
-               DTOutput("dataTable")
+             
+             # Working Dataset Subtab
+             tabPanel("Working Dataset",
+                      fluidPage(
+                        titlePanel("Working Dataset Management"),
+                        
+                        sidebarLayout(
+                          sidebarPanel(
+                            h4("Add/Remove Datasets"),
+                            selectInput("select_dataset", "Choose Dataset to Add:", 
+                                        choices = names(datasets), multiple = FALSE),
+                            actionButton("add_dataset", "➕ Add to Working Dataset", class = "btn-success"),
+                            br(), br(),
+                            
+                            h4("Current Working Dataset"),
+                            uiOutput("working_dataset_list"),
+                            actionButton("remove_dataset", "❌ Remove Selected Dataset", class = "btn-danger"),
+                            br(), br(),
+                            
+                            h4("Download Working Dataset"),
+                            downloadButton("download_dataset", "💾 Download", class = "btn-primary")
+                          ),
+                          
+                          mainPanel(
+                            h3("Working Dataset Preview"),
+                            DTOutput("working_dataset_table")
+                          )
+                        )
+                      )
+             )
+  ),
+  
+  tabPanel("Clustering",
+           fluidPage(
+             titlePanel("Cluster Genes"),
+             
+             sidebarLayout(
+               sidebarPanel(
+                 selectInput("clustering_dataset", "Select Dataset:", choices = names(datasets)),
+                 selectInput("clustering_genes", "Select Genes:", choices = NULL, multiple = TRUE),
+                 selectInput("clustering_method", "Clustering Method:", 
+                             choices = c("K-means", "Hierarchical", "DBSCAN")),
+                 actionButton("run_clustering", "Run Clustering", class = "btn-primary")
+               ),
+               
+               mainPanel(
+                 plotOutput("clustering_plot")
+               )
              )
            )
   ),
@@ -55,7 +111,6 @@ ui <- navbarPage(
            fluidPage(
              titlePanel("Choose a Data Analysis Type"),
              
-             # Dashboard Layout - Clickable Cards for Each Analysis
              fluidRow(
                column(3, actionButton("go_histogram", "📊 Histogram", class = "btn-analysis")),
                column(3, actionButton("go_scatter", "🔴 Scatter Plot", class = "btn-analysis")),
@@ -77,7 +132,6 @@ ui <- navbarPage(
                column(3, actionButton("go_pcsf", "🕸️ PCSF", class = "btn-analysis"))
              ),
              
-             # Styling for uniform buttons
              tags$style(HTML("
                .btn-analysis {
                  background-color: white !important;
@@ -104,9 +158,7 @@ ui <- navbarPage(
            )
   ),
   
-  
-  
-  
+
   # Genome Browser Tab
   tabPanel("Genome Browser", h3("Genome Browser"))
 )
