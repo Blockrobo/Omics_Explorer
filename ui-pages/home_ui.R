@@ -1,5 +1,4 @@
 home_UI <- function(id) {
-  ns <- NS(id)
   tabPanel("Home",
            fluidPage(
              fluidRow(

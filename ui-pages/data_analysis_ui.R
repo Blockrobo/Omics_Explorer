@@ -2,28 +2,26 @@ source("ui-pages/data-analysis-pages/histogram_ui.R")
 
 
 data_analysis_UI <- function(id) {
-  ns <- NS(id)
-  
   tabPanel("Data Analysis",
            fluidPage(
              titlePanel("Choose a Data Analysis Type"),
              
              fluidRow(
-               column(3, actionButton(ns("go_histogram"), "📊 Histogram", class = "btn-analysis")),
-               column(3, actionButton(ns("go_scatter"), "🔴 Scatter Plot", class = "btn-analysis")),
-               column(3, actionButton(ns("go_boxplot"), "📦 Boxplot", class = "btn-analysis")),
-               column(3, actionButton(ns("go_correlation"), "📈 Correlation Matrix", class = "btn-analysis"))
+               column(3, actionButton("go_histogram", "📊 Histogram", class = "btn-analysis")),
+               column(3, actionButton("go_scatter", "🔴 Scatter Plot", class = "btn-analysis")),
+               column(3, actionButton("go_boxplot", "📦 Boxplot", class = "btn-analysis")),
+               column(3, actionButton("go_correlation", "📈 Correlation Matrix", class = "btn-analysis"))
              ),
              
              fluidRow(
-               column(3, actionButton(ns("go_heatmap"), "🔥 Heatmap", class = "btn-analysis")),
-               column(3, actionButton(ns("go_venn"), "🔗 Venn Diagram", class = "btn-analysis")),
-               column(3, actionButton(ns("go_enrichment"), "📊 Enrichment Analysis", class = "btn-analysis")),
-               column(3, actionButton(ns("go_wgcna"), "🔗 WGCNA", class = "btn-analysis"))
+               column(3, actionButton("go_heatmap", "🔥 Heatmap", class = "btn-analysis")),
+               column(3, actionButton("go_venn", "🔗 Venn Diagram", class = "btn-analysis")),
+               column(3, actionButton("go_enrichment", "📊 Enrichment Analysis", class = "btn-analysis")),
+               column(3, actionButton("go_wgcna", "🔗 WGCNA", class = "btn-analysis"))
              ),
              
              fluidRow(
-               column(3, actionButton(ns("go_pcsf"), "🕸️ PCSF", class = "btn-analysis"))
+               column(3, actionButton("go_pcsf", "🕸️ PCSF", class = "btn-analysis"))
              ),
              
              tags$style(HTML("
